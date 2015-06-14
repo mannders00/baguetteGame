@@ -71,7 +71,6 @@ public class Character : MonoBehaviour {
 
 			float horizontal = Input.GetAxis("Mouse X");
 			//float horizontal = Input.GetAxis("Horizontal");
-			print(horizontal);
 			if(horizontal < 0){
 				transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
 			}
@@ -133,13 +132,14 @@ public class Character : MonoBehaviour {
 			flySpeed = 100;
 		}
 	}
+	private int planet;
 	void OnTriggerEnter(Collider other){
 		switch(other.tag){
-			case "Planet1": stop("Pita", 1); break;
-			case "Planet2": stop("Tortilla", 2); break;
-			case "Planet3": stop("White Bread", 3); break;
-			case "Planet4": stop("Sourdough", 4); break;
-			case "Planet5": stop("Rye", 5); break;
+			case "Planet1": stop("Pita (1)", 1); planet = 1; break;
+			case "Planet2": stop("Tortilla (2)", 2); planet = 2; break;
+			case "Planet3": stop("White Bread (3)", 3); planet = 3; break;
+			case "Planet4": stop("Sourdough (4)", 4); planet = 4; break;
+			case "Planet5": stop("Rye (5)", 5); planet = 5; break;
 		}
 	}
 	void stop(string planetText, int planetNumber){
@@ -147,5 +147,8 @@ public class Character : MonoBehaviour {
 		gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
 		animator.SetTrigger("Cinematic_Drive");
 		header.text = "you are now entering planet "+planetText;
+	}
+	void switchPlanet(){
+		Application.LoadLevel(planet);
 	}
 }
