@@ -48,10 +48,10 @@ public class Character : MonoBehaviour {
 
 		Vector3 position1 = transform.TransformPoint(x1, 0, 0);
 		Vector3 position2 = transform.TransformPoint(3, 0, 0);
-		Vector3 projectilePosition = transform.TransformPoint(-11.15F, -3.45F, -0.2F);
+		//Vector3 projectilePosition = transform.TransformPoint(-11.15F, -3.45F, -0.2F);
 
-		Vector3 raycastOrigin = cam.ViewportToWorldPoint(new Vector3(0.5F, 0.5F, 0));
-		Vector3 forward = transform.TransformDirection(Vector3.left) * 10;
+		//Vector3 raycastOrigin = cam.ViewportToWorldPoint(new Vector3(0.5F, 0.5F, 0));
+		//Vector3 forward = transform.TransformDirection(Vector3.left) * 10;
 
 		if(locked == false){
 			if(Input.GetKey(KeyCode.W)){
@@ -101,6 +101,7 @@ public class Character : MonoBehaviour {
 
 			cooldown -= Time.deltaTime;
 			//Firing
+			/*
 			GameObject clone;
 			RaycastHit hit;
 			if(Input.GetKeyDown(KeyCode.Space)){
@@ -114,7 +115,7 @@ public class Character : MonoBehaviour {
 						}
 					}
 				}
-			}
+			}*/
 		}
 
 	}
