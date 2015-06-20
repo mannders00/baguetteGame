@@ -25,6 +25,7 @@ public class CharacterPlanet : MonoBehaviour {
 	private bool locked;
 	private int planetInt;
 	private bool cursorLockState = true;
+	private int health = 100;
 
 	private Quaternion rocketRotation = Quaternion.identity;
 
@@ -120,7 +121,7 @@ public class CharacterPlanet : MonoBehaviour {
 	}
 	IEnumerator addScore(RaycastHit hit2){
 		yield return new WaitForSeconds(0.25F);
-		hit2.transform.SendMessage("Hit");
+		hit2.transform.SendMessage("Hit", SendMessageOptions.DontRequireReceiver);
 	}
 	/*public void Turbo(){
 		turbo = !turbo;
