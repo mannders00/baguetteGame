@@ -18,7 +18,7 @@ public class CharacterPlanet : MonoBehaviour {
 	public float projectileForce;
 //	public GameObject turboImage;
 //	public Text header;
-	public Transform rocket;
+	public GameObject rocket;
 
 	private Vector3 velocity = Vector3.zero;
 	private bool turbo;
@@ -26,6 +26,7 @@ public class CharacterPlanet : MonoBehaviour {
 	private int planetInt;
 	private bool cursorLockState = true;
 	private int health = 100;
+	public GameObject explosion;
 
 	private Quaternion rocketRotation = Quaternion.identity;
 
@@ -45,7 +46,6 @@ public class CharacterPlanet : MonoBehaviour {
 		}
 		
 		//rocket.transform.localEulerAngles = Vector3.Lerp(rocket.transform.localEulerAngles, new Vector3(45, 0, 0), Time.deltaTime * 5);
-		rocket.transform.localRotation = Quaternion.Lerp(rocket.transform.localRotation, rocketRotation, Time.deltaTime * 3);
 
 		Vector3 position1 = transform.TransformPoint(x1, 0, 0);
 		Vector3 position2 = transform.TransformPoint(3, 0, 0);
@@ -55,6 +55,8 @@ public class CharacterPlanet : MonoBehaviour {
 		Vector3 forward = transform.TransformDirection(Vector3.left) * 10;
 
 		if(locked == false){
+			rocket.transform.localRotation = Quaternion.Lerp(rocket.transform.localRotation, rocketRotation, Time.deltaTime * 3);
+
 			if(Input.GetKey(KeyCode.W)){
 				rb.AddRelativeForce(Vector3.left * flySpeed * Time.deltaTime * 10);
 				cam.transform.position = Vector3.SmoothDamp(cam.transform.position, position1, ref velocity, 0.3F);
@@ -122,6 +124,10 @@ public class CharacterPlanet : MonoBehaviour {
 	IEnumerator addScore(RaycastHit hit2){
 		yield return new WaitForSeconds(0.25F);
 		hit2.transform.SendMessage("Hit", SendMessageOptions.DontRequireReceiver);
+	}
+	public void Explode(){
+		locked = true;
+		rb.velocity =  Vector3.zero;
 	}
 	/*public void Turbo(){
 		turbo = !turbo;

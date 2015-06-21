@@ -8,11 +8,16 @@ public class EnemyBread : MonoBehaviour {
 	public GameObject explosion;
 
 	void Update () {
-		transform.LookAt(player.transform, Vector3.up);
-		transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+		if(player){
+			transform.LookAt(player.transform, Vector3.up);
+			transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+		}
 	}
 	void Hit(){
 		Instantiate(explosion, transform.position, Quaternion.identity);
 		GameObject.Destroy(gameObject);
+	}
+	void OnTriggerEnter(Collider other){
+		Hit();
 	}
 }
