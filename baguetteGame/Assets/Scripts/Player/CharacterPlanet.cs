@@ -27,6 +27,7 @@ public class CharacterPlanet : MonoBehaviour {
 	private bool cursorLockState = true;
 	private int health = 100;
 	public GameObject explosion;
+	public Text healthText;
 
 	private Quaternion rocketRotation = Quaternion.identity;
 
@@ -35,6 +36,10 @@ public class CharacterPlanet : MonoBehaviour {
 		turbo = false;
 	//	turboImage.GetComponent<Image>().color = Color.green;
 		locked = false;
+		Cursor.lockState = CursorLockMode.Locked;
+		UnityEngine.Cursor.visible = false;
+		InvokeRepeating("add1", 0, 1);
+		healthText.text = "+ " + health.ToString();
 	}
 	void Update(){
 
@@ -128,6 +133,17 @@ public class CharacterPlanet : MonoBehaviour {
 	public void Explode(){
 		locked = true;
 		rb.velocity =  Vector3.zero;
+	}
+	public void changeHealth(int healthInt){
+		health = health - healthInt;
+		healthText.text = "+ " + health.ToString();
+		
+	}
+	public void add1(){
+		if(health < 100){
+			health += 1;
+			healthText.text = "+ " + health.ToString();
+		}
 	}
 	/*public void Turbo(){
 		turbo = !turbo;

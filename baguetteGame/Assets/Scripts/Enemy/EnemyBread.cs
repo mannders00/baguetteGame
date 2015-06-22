@@ -3,14 +3,16 @@ using System.Collections;
 
 public class EnemyBread : MonoBehaviour {
 
+	public GameObject playerObject;
 	public GameObject player;
 	public int speed;
 	public GameObject explosion;
+	public int damage;
 
 	void Update () {
-		if(player){
+		if(playerObject){
 			transform.LookAt(player.transform, Vector3.up);
-			transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+			transform.position = Vector3.MoveTowards(transform.position, playerObject.transform.position, speed * Time.deltaTime);
 		}
 	}
 	void Hit(){
@@ -18,6 +20,9 @@ public class EnemyBread : MonoBehaviour {
 		GameObject.Destroy(gameObject);
 	}
 	void OnTriggerEnter(Collider other){
-		Hit();
+		if(other.tag != "CanBeShot" && other.tag == "Player"){
+			player.SendMessage("changeHealth", 25, SendMessageOptions.DontRequireReceiver);
+			Hit();
+		}
 	}
 }
