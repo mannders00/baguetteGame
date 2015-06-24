@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class CharacterPlanet : MonoBehaviour {
 	
@@ -19,6 +20,7 @@ public class CharacterPlanet : MonoBehaviour {
 //	public GameObject turboImage;
 //	public Text header;
 	public GameObject rocket;
+	public int sensitivity;
 
 	private Vector3 velocity = Vector3.zero;
 	private bool turbo;
@@ -77,21 +79,28 @@ public class CharacterPlanet : MonoBehaviour {
 				thruster.SetActive(false);
 			}
 
+			float z = transform.localEulerAngles.z;
+			/*z = Mathf.Clamp((z <= 180) ? z : -(360 - z), -90, 90);
+			Quaternion clamp = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, z);
+			transform.rotation = clamp;*/
+			
 			float horizontal = Input.GetAxis("Mouse X");
-			//float horizontal = Input.GetAxis("Horizontal");
+			//float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
 			if(horizontal < 0){
-				transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
-			}
-			if(horizontal > 0){
+				if(z > 270 && z < 360 || z < 90){
+					transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
+				}else{
+					transform.Rotate(Vector3.down * horizontal * Time.deltaTime * rotateSpeed, Space.World);
+				}
+			}else{
 				transform.Rotate(Vector3.up * horizontal * Time.deltaTime * rotateSpeed, Space.World);
 			}
 			float vertical = Input.GetAxis("Mouse Y");
-			//float vertical = Input.GetAxis("Vertical");
+			//float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
 
 			if(vertical > 0){
 				transform.Rotate(Vector3.back * vertical * Time.deltaTime * rotateSpeed);
-			}
-			if(vertical < 0){
+			}else{
 				transform.Rotate(Vector3.forward * -vertical * Time.deltaTime * rotateSpeed);
 			}
 			rocketRotation.eulerAngles = new Vector3(horizontal * 15, 0, vertical * -5);
@@ -173,6 +182,5 @@ public class CharacterPlanet : MonoBehaviour {
 	}
 	void switchPlanet(){
 		Application.LoadLevel(planet);
-	}*/
-}
- 
+	}
+}*/
