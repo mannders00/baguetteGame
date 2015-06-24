@@ -88,12 +88,17 @@ public class CharacterPlanet : MonoBehaviour {
 			//float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
 			if(horizontal < 0){
 				if(z > 270 && z < 360 || z < 90){
-					transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
-				}else{
-					transform.Rotate(Vector3.down * horizontal * Time.deltaTime * rotateSpeed, Space.World);
-				}
-			}else{
-				transform.Rotate(Vector3.up * horizontal * Time.deltaTime * rotateSpeed, Space.World);
+						transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
+					}else{
+						transform.Rotate(Vector3.down * horizontal * Time.deltaTime * rotateSpeed, Space.World);
+					}
+			}
+			if(horizontal > 0){
+				if(z > 270 && z < 360 || z < 90){
+						transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
+					}else{
+						transform.Rotate(Vector3.down * horizontal * Time.deltaTime * rotateSpeed, Space.World);
+					}
 			}
 			float vertical = Input.GetAxis("Mouse Y");
 			//float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
@@ -182,5 +187,5 @@ public class CharacterPlanet : MonoBehaviour {
 	}
 	void switchPlanet(){
 		Application.LoadLevel(planet);
-	}
-}*/
+	}*/
+}
