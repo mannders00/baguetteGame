@@ -1,0 +1,150 @@
+[33mcommit d15406ed36c38a369c97ba901dde95396cff57a2[m
+Author: Matthew-PC <matta9001@gmail.com>
+Date:   Wed Jun 24 18:24:11 2015 -0500
+
+    First commit from command line!
+
+[33mcommit 25c7a237349d30ff236584fb58bad6d83abb4a9c[m
+Author: Matthew-PC <matta9001@gmail.com>
+Date:   Wed Jun 24 12:30:47 2015 -0500
+
+    I'm going to revert because of parsing error
+
+[33mcommit d1689f8d482f251286190d40ac6e3a5c2269bffe[m
+Author: Matthew-PC <matta9001@gmail.com>
+Date:   Sun Jun 21 23:57:35 2015 -0500
+
+    Finished the attack script
+    
+    The bread can now chase down, crash, explode, and deal damage
+
+[33mcommit 2d11057abef9535f1657f6462aebaad6586ebec9[m
+Author: Matthew-PC <matta9001@gmail.com>
+Date:   Sun Jun 21 15:29:01 2015 -0500
+
+    Starting to change every level
+    
+    I'm going to make some base prefabs for every single planet, backup
+    before that
+
+[33mcommit 2f549c0980fdcd8ce85f908c8010a4d23a88565b[m
+Author: Matthew-PC <matta9001@gmail.com>
+Date:   Sun Jun 21 00:32:18 2015 -0500
+
+    Explosions
+    
+    I made a particle system with explosions and added it to every piece of
+    bread
+
+[33mcommit c5be76af06e1036288b37da1e1ea464b717afeca[m
+Author: Matthew-PC <matta9001@gmail.com>
+Date:   Sat Jun 20 15:24:44 2015 -0500
+
+    6/20/2015
+    
+    I wanted to do a backup at this time because i might do things i might
+    regret
+
+[33mcommit ab8572bddcb218e97f4befbae2b1cfc592f4f232[m
+Author: matta9001 <matta9001@gmail.com>
+Date:   Sun Jun 14 13:31:30 2015 -0500
+
+    FIxed all planet skyboxes
+    
+    Every planet now has its own skybox, not the best solution but it wasn't a terrible one
+
+[33mcommit 404db563cbf98678f5b2c5da6e876095b3b00f69[m
+Author: matta9001 <matta9001@gmail.com>
+Date:   Sun Jun 14 12:22:44 2015 -0500
+
+    Quick backup before big change
+    
+    I don't want to individually add everything to all 5 planet scenes, so im going to delete the 5 planets, and add 4, and hope that my script changes the colors on its own
+
+[33mcommit b84c4f92de04681d90ff9ba9061a834fe2d5e371[m
+Author: Matthew-PC <matta9001@gmail.com>
+Date:   Sun Jun 14 00:21:44 2015 -0500
+
+    Added planet sky colors
+    
+    I added every single planet that changes color as you enter it, shortcut
+    for making every planet unique
+
+[33mcommit a4b4d0cf753b0ca1dd592d14e140fac0fc009dd0[m
+Author: matta9001 <matta9001@gmail.com>
+Date:   Sat Jun 13 23:34:59 2015 -0500
+
+    I put the mars back
+
+[33mcommit 5c61a4bdbfa74332183db12bc5fa8c88518d9751[m
+Author: Matthew-PC <matta9001@gmail.com>
+Date:   Sat Jun 13 23:29:45 2015 -0500
+
+    I removed planet1
+
+[33mcommit 1a5c3e64e1c064a8dd8617aca7934f2556804569[m
+Author: Matthew-PC <matta9001@gmail.com>
+Date:   Sat Jun 13 23:26:31 2015 -0500
+
+    Seeing if this works
+
+[33mcommit f47e52fdfdddd5405641e6cf45ad8fa3b2f74293[m
+Author: matta9001 <matta9001@gmail.com>
+Date:   Fri Jun 12 21:26:02 2015 -0500
+
+    Added butter butter
+    
+    I added butter after i added the git ignore file to see if the butter would still get added
+
+[33mcommit 06a9315114f9ded7b17efc769d9acd5e4a648972[m
+Author: matta9001 <matta9001@gmail.com>
+Date:   Fri Jun 12 21:20:55 2015 -0500
+
+    Update .gitignore
+
+[33mcommit 6c23f105b95257a6ee0ded5311a91b98fb08d9a1[m
+Author: Matthew-PC <matta9001@gmail.com>
+Date:   Fri Jun 12 21:15:04 2015 -0500
+
+    I removed the butter here
+
+[33mcommit 7417be7356a3f92261ded74242779a67889af868[m
+Author: matta9001 <matta9001@gmail.com>
+Date:   Fri Jun 12 21:06:31 2015 -0500
+
+    Library
+
+[33mcommit 7e3f7a9a20dab7263930ed4edabc46fa925e4fdb[m
+Author: matta9001 <matta9001@gmail.com>
+Date:   Fri Jun 12 21:04:19 2015 -0500
+
+    Update .gitignore
+
+[33mcommit 11c25b21e764b7a5d58b2206b69c0c91682448a7[m
+Author: Matthew-PC <matta9001@gmail.com>
+Date:   Fri Jun 12 20:56:01 2015 -0500
+
+    Revert "Windows after copying everything from Dropbox"
+    
+    This reverts commit d7623dc41ee2cdd92fd1b8a80d023644e07dee60.
+
+[33mcommit d7623dc41ee2cdd92fd1b8a80d023644e07dee60[m
+Author: Matthew-PC <matta9001@gmail.com>
+Date:   Fri Jun 12 20:54:27 2015 -0500
+
+    Windows after copying everything from Dropbox
+    
+    This is the direct copy from the mac. I manually brought it over because
+    i thought some things might not be syncing
+
+[33mcommit 0d26be1c3bf67b24e00821690ea5b75c33c8a58f[m
+Author: matta9001 <matta9001@gmail.com>
+Date:   Fri Jun 12 20:27:46 2015 -0500
+
+    First Commit after making it
+
+[33mcommit 3502c0377da66650800935addb88d44b22892d11[m
+Author: matta9001 <matta9001@gmail.com>
+Date:   Fri Jun 12 20:24:26 2015 -0500
+
+    Initial commit
