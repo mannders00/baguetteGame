@@ -44,7 +44,7 @@ public class CharacterPlanet : MonoBehaviour {
 		healthText.text = "+ " + health.ToString();
 	}
 	void Update(){
-
+		print("yolo");
 		float x1;
 		if(turbo == true){
 			x1 = 50;
