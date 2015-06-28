@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: a8dfc875d78ad42bf94e987dae9d53ba
+timeCreated: 1435122848
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - cam: {instanceID: 0}
+  - rb: {instanceID: 0}
+  - thruster: {instanceID: 0}
+  - animator: {instanceID: 0}
+  - projectile: {fileID: 144414, guid: 26def962abd3b8b48a3b9389b434a6c5, type: 2}
+  - projectileParent: {instanceID: 0}
+  - rocket: {instanceID: 0}
+  - explosion: {instanceID: 0}
+  - healthText: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

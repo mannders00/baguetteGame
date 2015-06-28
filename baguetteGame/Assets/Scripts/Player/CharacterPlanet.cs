@@ -41,7 +41,7 @@ public class CharacterPlanet : MonoBehaviour {
 		Cursor.lockState = CursorLockMode.Locked;
 		UnityEngine.Cursor.visible = false;
 		InvokeRepeating("add1", 0, 1);
-		healthText.text = "+ " + health.ToString();
+		healthText.text = "H " + health.ToString();
 	}
 	void Update(){
 
@@ -63,6 +63,11 @@ public class CharacterPlanet : MonoBehaviour {
 
 		if(locked == false){
 			rocket.transform.localRotation = Quaternion.Lerp(rocket.transform.localRotation, rocketRotation, Time.deltaTime * 3);
+
+			if(health < 0){
+				Explode();
+				rocket.SendMessage("Explode", SendMessageOptions.DontRequireReceiver);
+			}
 
 			if(Input.GetKey(KeyCode.W)){
 				rb.AddRelativeForce(Vector3.left * flySpeed * Time.deltaTime * 10);
@@ -147,16 +152,18 @@ public class CharacterPlanet : MonoBehaviour {
 	public void Explode(){
 		locked = true;
 		rb.velocity =  Vector3.zero;
+		healthText.text = "H 0";
 	}
 	public void changeHealth(int healthInt){
-		health = health - healthInt;
-		healthText.text = "+ " + health.ToString();
-		
+		if(health > 0){
+			health = health - healthInt;
+			healthText.text = "H " + health.ToString();
+		}
 	}
 	public void add1(){
-		if(health < 100){
+		if(health < 100 && health > 0){
 			health += 1;
-			healthText.text = "+ " + health.ToString();
+			healthText.text = "H " + health.ToString();
 		}
 	}
 	/*public void Turbo(){
