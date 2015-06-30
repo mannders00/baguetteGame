@@ -17,13 +17,18 @@ public class EnemyBread : MonoBehaviour {
 
 	//		Vector3 positionHorizontal = new Vector3(playerObject.transform.position.x, transform.position.y, playerObject.transform.position.z);
 			Vector3 direction = playerObject.transform.position - transform.position;
-			if(Physics.Raycast(transform.position, direction, 5)){
-				transform.Translate(Vector3.up * Time.deltaTime * speed, Space.World);
-				go = false;
-			}else if(Physics.Raycast(transform.position, Vector3.down, 1)){
-				//transform.Translate(Vector3.up * Time.deltaTime * speed * 5);
-				transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-				go = true;
+			Vector3 moveHorizontal = new Vector3(playerObject.transform.position.x, transform.position.y, playerObject.transform.position.z);
+			RaycastHit hit;
+			if(Physics.Raycast(transform.position, direction, out hit, 5)){
+				if(hit.transform.tag != "Player"){
+					transform.Translate(Vector3.up * Time.deltaTime * speed, Space.World);
+					go = false;
+				}
+			}else if(Physics.Raycast(transform.position, Vector3.down, out hit, 3)){
+				if(hit.transform.tag != "Player"){
+					transform.position = Vector3.MoveTowards(transform.position, moveHorizontal, speed * Time.deltaTime);
+					go = false;
+				}
 			}else{
 				go = true;
 			}
