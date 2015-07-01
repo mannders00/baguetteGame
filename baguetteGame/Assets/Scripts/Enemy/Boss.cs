@@ -37,7 +37,7 @@ public class Boss : MonoBehaviour {
 
 	void OnTriggerEnter(Collider collision){
 		if(collision.transform.tag != "CanBeShot" && collision.transform.tag == "Player"){
-			player.SendMessage("changeHealth", 37.5F, SendMessageOptions.DontRequireReceiver);
+			player.SendMessage("changeHealth", 75, SendMessageOptions.DontRequireReceiver);
 		}
 		if(collision.transform.tag != "CanBeShot" && collision.transform.tag != "Player" && isDying){
 			Instantiate(explosion, transform.position, Quaternion.identity);
