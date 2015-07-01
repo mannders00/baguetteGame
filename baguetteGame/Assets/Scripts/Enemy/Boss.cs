@@ -25,6 +25,7 @@ public class Boss : MonoBehaviour {
 
 	}
 	void Update (){
+
 		if(isDying == false){
 			if(playerObject){
 				transform.position = Vector3.MoveTowards(transform.position, playerObject.transform.position, Time.deltaTime * speed);
@@ -34,14 +35,15 @@ public class Boss : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider other){
-		if(other.tag != "CanBeShot" && other.tag == "Player"){
-			player.SendMessage("changeHealth", 75, SendMessageOptions.DontRequireReceiver);
+	void OnTriggerEnter(Collider collision){
+		if(collision.transform.tag != "CanBeShot" && collision.transform.tag == "Player"){
+			player.SendMessage("changeHealth", 37.5F, SendMessageOptions.DontRequireReceiver);
 		}
-		if(other.tag != "CanBeShot" && other.tag != "Player" && isDying){
+		if(collision.transform.tag != "CanBeShot" && collision.transform.tag != "Player" && isDying){
 			Instantiate(explosion, transform.position, Quaternion.identity);
-			finish();
+				finish();
 		}
+
 	}
 	public void Hit(){
 		if(health > 0){

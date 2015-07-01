@@ -24,7 +24,7 @@ public class EnemyBread : MonoBehaviour {
 					transform.Translate(Vector3.up * Time.deltaTime * speed, Space.World);
 					go = false;
 				}
-			}else if(Physics.Raycast(transform.position, Vector3.down, out hit, 3)){
+			}else if(Physics.Raycast(transform.position, Vector3.down, out hit, 2.5F)){
 				if(hit.transform.tag != "Player"){
 					transform.position = Vector3.MoveTowards(transform.position, moveHorizontal, speed * Time.deltaTime);
 					go = false;
