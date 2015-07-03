@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 public class Butter : MonoBehaviour {
 
-	/*public void Hit(){
+	void OnTriggerEnter(Collider other){
 		GameObject Level = GameObject.Find("Level");
 		Level script = Level.GetComponent<Level>();
-		script.addScore();
+		script.butterCollect();
 		Object.Destroy(gameObject);
-	}*/
+	}
 }

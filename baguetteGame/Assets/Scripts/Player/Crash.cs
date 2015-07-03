@@ -16,6 +16,8 @@ public class Crash : MonoBehaviour {
 			GameObject clone = Instantiate(impact, impactPos, impactRot) as GameObject;
 			Destroy(clone, 1);
 			player.GetComponent<Rigidbody>().velocity = transform.right * 30;
+		}else if(other.tag == "NoCollide"){
+			
 		}else{
 			Explode();
 		}
