@@ -14,6 +14,7 @@ public class Boss : MonoBehaviour {
 	public GameObject enemyBread;
 	public int spawnY;
 	public int spawnXZ;
+	public GameObject Level;
 
 	public float totalHits;
 	private float damage;
@@ -26,11 +27,10 @@ public class Boss : MonoBehaviour {
 		totalStep = bossHealth.anchoredPosition.x * 2 / totalHits;
 		guiStepState = bossHealth.anchoredPosition.x;
 		damage = health / totalHits;
-		Invoke("SpawnEnemy", 10);
+		Invoke("SpawnEnemy", 5);
 
 	}
 	void Update (){
-
 		if(!isDying){
 			if(playerObject){
 				transform.position = Vector3.MoveTowards(transform.position, playerObject.transform.position, Time.deltaTime * speed);
@@ -83,13 +83,23 @@ public class Boss : MonoBehaviour {
 			Invoke("SpawnEnemy", invokeTime);
 		}
 	}
+	RaycastHit pedestalPos;
 	void DestroyBoss(){
 		isDying = true;
 		fire.SetActive(true);
 		gameObject.GetComponent<Rigidbody>().isKinematic = false;
 		gameObject.GetComponent<Rigidbody>().useGravity = true;
+
+		if(Physics.Raycast(transform.position, Vector3.down, out pedestalPos)){
+			
+		}
+		Level levelScript = Level.GetComponent<Level>();
+		levelScript.SetupPedestal(pedestalPos.point);
 	}
 	void finish(){
+		Level levelScript = Level.GetComponent<Level>();
+		levelScript.SpawnPedestal();
+
 		Object.Destroy(gameObject);
 	}
 }
