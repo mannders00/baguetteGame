@@ -18,7 +18,7 @@ public class CharacterPlanet : MonoBehaviour {
 	private float cooldown = 0.5F;
 	public float projectileForce;
 //	public GameObject turboImage;
-//	public Text header;
+	public Text header;
 	public GameObject rocket;
 	public int sensitivity;
 
@@ -34,7 +34,7 @@ public class CharacterPlanet : MonoBehaviour {
 	private Quaternion rocketRotation = Quaternion.identity;
 
 	void Start(){
-		cooldown = 0;
+	//	cooldown = 0;
 		turbo = false;
 	//	turboImage.GetComponent<Image>().color = Color.green;
 		locked = false;

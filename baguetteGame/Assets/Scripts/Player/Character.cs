@@ -1,38 +1,47 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Character : MonoBehaviour {
 	
-	public float rotateSpeed;
-	public float flySpeed;
+	public float rotateSpeed = 50;
+	public float flySpeed = 200;
 
 	public Camera cam;
 	public Rigidbody rb;
 	public bool flying;
 	public GameObject thruster;
 	public Animator animator;
-	public GameObject projectile;
-	public GameObject projectileParent;
-	private float cooldown = 0.5F;
+//	public GameObject projectile;
+//	public GameObject projectileParent;
+//	private float cooldown = 0.5F;
 	public float projectileForce;
 	public GameObject turboImage;
 	public Text header;
-	public Transform rocket;
+	public GameObject rocket;
+	public int sensitivity;
 
 	private Vector3 velocity = Vector3.zero;
 	private bool turbo;
 	private bool locked;
 	private int planetInt;
 	private bool cursorLockState = true;
+	private int health = 100;
+	public GameObject explosion;
 
 	private Quaternion rocketRotation = Quaternion.identity;
 
 	void Start(){
-		cooldown = 0;
+//		cooldown = 0;
 		turbo = false;
-		turboImage.GetComponent<Image>().color = Color.green;
+	//	turboImage.GetComponent<Image>().color = Color.green;
 		locked = false;
+		Cursor.lockState = CursorLockMode.Locked;
+		UnityEngine.Cursor.visible = false;
+	//	InvokeRepeating("add1", 0, 1);
+	//	healthText.text = "H " + health.ToString();
+		turboImage.GetComponent<Image>().color = Color.green;
 	}
 	void Update(){
 
@@ -44,16 +53,23 @@ public class Character : MonoBehaviour {
 		}
 		
 		//rocket.transform.localEulerAngles = Vector3.Lerp(rocket.transform.localEulerAngles, new Vector3(45, 0, 0), Time.deltaTime * 5);
-		rocket.transform.localRotation = Quaternion.Lerp(rocket.transform.localRotation, rocketRotation, Time.deltaTime * 3);
 
 		Vector3 position1 = transform.TransformPoint(x1, 0, 0);
 		Vector3 position2 = transform.TransformPoint(3, 0, 0);
-		//Vector3 projectilePosition = transform.TransformPoint(-11.15F, -3.45F, -0.2F);
+		/*
+		Vector3 projectilePosition = transform.TransformPoint(-11.15F, -3.45F, -0.2F);
 
-		//Vector3 raycastOrigin = cam.ViewportToWorldPoint(new Vector3(0.5F, 0.5F, 0));
-		//Vector3 forward = transform.TransformDirection(Vector3.left) * 10;
-
+		Vector3 raycastOrigin = cam.ViewportToWorldPoint(new Vector3(0.5F, 0.5F, 0));
+		Vector3 forward = transform.TransformDirection(Vector3.left) * 10;
+		*/
 		if(locked == false){
+			rocket.transform.localRotation = Quaternion.Lerp(rocket.transform.localRotation, rocketRotation, Time.deltaTime * 3);
+
+			if(health < 0){
+//				Explode();
+				rocket.SendMessage("Explode", SendMessageOptions.DontRequireReceiver);
+			}
+
 			if(Input.GetKey(KeyCode.W)){
 				rb.AddRelativeForce(Vector3.left * flySpeed * Time.deltaTime * 10);
 				cam.transform.position = Vector3.SmoothDamp(cam.transform.position, position1, ref velocity, 0.3F);
@@ -69,21 +85,33 @@ public class Character : MonoBehaviour {
 				thruster.SetActive(false);
 			}
 
+			float z = transform.localEulerAngles.z;
+			/*z = Mathf.Clamp((z <= 180) ? z : -(360 - z), -90, 90);
+			Quaternion clamp = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, z);
+			transform.rotation = clamp;*/
+			
 			float horizontal = Input.GetAxis("Mouse X");
-			//float horizontal = Input.GetAxis("Horizontal");
+			//float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
 			if(horizontal < 0){
-				transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
+				if(z > 270 && z < 360 || z < 90){
+						transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
+					}else{
+						transform.Rotate(Vector3.down * horizontal * Time.deltaTime * rotateSpeed, Space.World);
+					}
 			}
 			if(horizontal > 0){
-				transform.Rotate(Vector3.up * horizontal * Time.deltaTime * rotateSpeed, Space.World);
+				if(z > 270 && z < 360 || z < 90){
+						transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
+					}else{
+						transform.Rotate(Vector3.down * horizontal * Time.deltaTime * rotateSpeed, Space.World);
+					}
 			}
 			float vertical = Input.GetAxis("Mouse Y");
-			//float vertical = Input.GetAxis("Vertical");
+			//float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
 
 			if(vertical > 0){
 				transform.Rotate(Vector3.back * vertical * Time.deltaTime * rotateSpeed);
-			}
-			if(vertical < 0){
+			}else{
 				transform.Rotate(Vector3.forward * -vertical * Time.deltaTime * rotateSpeed);
 			}
 			rocketRotation.eulerAngles = new Vector3(horizontal * 15, 0, vertical * -5);
@@ -98,10 +126,9 @@ public class Character : MonoBehaviour {
 					UnityEngine.Cursor.visible = true;
 				}
 			}
-
+			/*
 			cooldown -= Time.deltaTime;
 			//Firing
-			/*
 			GameObject clone;
 			RaycastHit hit;
 			if(Input.GetKeyDown(KeyCode.Space)){
@@ -118,10 +145,6 @@ public class Character : MonoBehaviour {
 			}*/
 		}
 
-	}
-	IEnumerator addScore(RaycastHit hit2){
-		yield return new WaitForSeconds(0.25F);
-		hit2.transform.SendMessage("Hit");
 	}
 	public void Turbo(){
 		turbo = !turbo;
