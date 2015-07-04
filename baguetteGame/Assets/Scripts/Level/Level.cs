@@ -7,14 +7,18 @@ public class Level : MonoBehaviour {
 	public GameObject pedestal;
 	public GameObject butter;
 	public GameObject dust;
+	public GameObject player;
 
 	public float pedestalSpeed = 1;
 	Vector3 spawnUnderPos;
 	Vector3 spawnUpPos;
 	private bool isSpawned = false;
 
+	public float boundary;
+
 	public void SetupPedestal(Vector3 hitPoint){
-		//this SpawnGroundPos is a vector3 position that is taken from the boss after it dies, basically when it dies i want it to spawn this little pedestal where it explodes
+		// this SpawnGroundPos is a vector3 position that is taken from the boss after it dies,
+		// basically when it dies i want it to spawn this little pedestal where it explodes
 		Vector3 spawnGroundPos = hitPoint;
 		spawnUnderPos = new Vector3(spawnGroundPos.x, spawnGroundPos.y - 10, spawnGroundPos.z);
 		spawnUpPos = new Vector3(spawnGroundPos.x, spawnGroundPos.y + 5.4F, spawnGroundPos.z);
@@ -50,6 +54,8 @@ public class Level : MonoBehaviour {
 		if(isSpawned){
 			pedestal.transform.position = Vector3.Lerp(pedestal.transform.position, spawnUpPos, Time.deltaTime * pedestalSpeed);
 		}
+		player.transform.position = new Vector3(Mathf.Clamp(player.transform.position.x, -boundary, boundary),
+		 player.transform.position.y, Mathf.Clamp(player.transform.position.z, -boundary, boundary));
 	}
 	public void butterCollect(){
 		print("butterr");

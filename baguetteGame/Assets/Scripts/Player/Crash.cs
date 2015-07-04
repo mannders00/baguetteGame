@@ -5,6 +5,7 @@ public class Crash : MonoBehaviour {
 
 	public GameObject explosion;
 	public GameObject impact;
+	public float knockback;
 
 	public GameObject player;
 	private Vector3 backward;
@@ -15,7 +16,7 @@ public class Crash : MonoBehaviour {
 			Quaternion impactRot = Quaternion.Euler(player.transform.localEulerAngles.x - 40, player.transform.localEulerAngles.y + 90, player.transform.localEulerAngles.z - 90);
 			GameObject clone = Instantiate(impact, impactPos, impactRot) as GameObject;
 			Destroy(clone, 1);
-			player.GetComponent<Rigidbody>().velocity = transform.right * 30;
+			player.GetComponent<Rigidbody>().velocity = transform.right * knockback;
 		}else if(other.tag == "NoCollide"){
 			
 		}else{
