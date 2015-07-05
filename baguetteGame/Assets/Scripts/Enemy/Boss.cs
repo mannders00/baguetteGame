@@ -15,6 +15,7 @@ public class Boss : MonoBehaviour {
 	public int spawnY;
 	public int spawnXZ;
 	public GameObject Level;
+	public float hitDamage;
 
 	public float totalHits;
 	private float damage;
@@ -40,7 +41,7 @@ public class Boss : MonoBehaviour {
 
 	void OnTriggerEnter(Collider collision){
 		if(collision.transform.tag != "CanBeShot" && collision.transform.tag == "Player"){
-			player.SendMessage("changeHealth", 75, SendMessageOptions.DontRequireReceiver);
+			player.SendMessage("changeHealth", hitDamage, SendMessageOptions.DontRequireReceiver);
 		}
 
 	}
@@ -71,7 +72,7 @@ public class Boss : MonoBehaviour {
 					x = -x;
 					z = -z;
 				}
-				Vector3 spawnPosition = new Vector3(transform.localPosition.x + x, transform.localPosition.y + 3, transform.localPosition.z + z);
+				Vector3 spawnPosition = new Vector3(transform.localPosition.x + x, transform.localPosition.y + spawnY, transform.localPosition.z + z);
 
 				GameObject enemyBreadClone = Instantiate(enemyBread, spawnPosition, Quaternion.identity) as GameObject;
 				enemyBreadClone.SetActive(true);
