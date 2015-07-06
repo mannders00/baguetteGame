@@ -64,7 +64,7 @@ public class CharacterPlanet : MonoBehaviour {
 		if(locked == false){
 			rocket.transform.localRotation = Quaternion.Lerp(rocket.transform.localRotation, rocketRotation, Time.deltaTime * 3);
 
-			if(health < 0){
+			if(health <= 0){
 				Explode();
 				rocket.SendMessage("Explode", SendMessageOptions.DontRequireReceiver);
 			}
@@ -90,7 +90,7 @@ public class CharacterPlanet : MonoBehaviour {
 			transform.rotation = clamp;*/
 			
 			float horizontal = Input.GetAxis("Mouse X");
-			//float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
+	//		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
 			if(horizontal < 0){
 				if(z > 270 && z < 360 || z < 90){
 						transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
@@ -106,7 +106,7 @@ public class CharacterPlanet : MonoBehaviour {
 					}
 			}
 			float vertical = Input.GetAxis("Mouse Y");
-			//float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
+	//		float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
 
 			if(vertical > 0){
 				transform.Rotate(Vector3.back * vertical * Time.deltaTime * rotateSpeed);

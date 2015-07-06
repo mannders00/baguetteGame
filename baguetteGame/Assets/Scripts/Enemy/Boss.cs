@@ -15,9 +15,10 @@ public class Boss : MonoBehaviour {
 	public int spawnY;
 	public int spawnXZ;
 	public GameObject Level;
-	public float hitDamage;
+	public float hitDamage = 100;
+	private int currentEnemies;
 
-	public float totalHits;
+	public float totalHits = 50;
 	private float damage;
 	private float totalStep;
 	private float health = 100;
@@ -72,12 +73,15 @@ public class Boss : MonoBehaviour {
 					x = -x;
 					z = -z;
 				}
-				Vector3 spawnPosition = new Vector3(transform.localPosition.x + x, transform.localPosition.y + spawnY, transform.localPosition.z + z);
+				if(currentEnemies < 10){
+					Vector3 spawnPosition = new Vector3(transform.localPosition.x + x, transform.localPosition.y + spawnY, transform.localPosition.z + z);
 
-				GameObject enemyBreadClone = Instantiate(enemyBread, spawnPosition, Quaternion.identity) as GameObject;
-				enemyBreadClone.SetActive(true);
-				GameObject impactClone = Instantiate(impact, spawnPosition, Quaternion.identity) as GameObject;
-				GameObject.Destroy(impactClone, 1);
+					GameObject enemyBreadClone = Instantiate(enemyBread, spawnPosition, Quaternion.identity) as GameObject;
+					enemyBreadClone.SetActive(true);
+					GameObject impactClone = Instantiate(impact, spawnPosition, Quaternion.identity) as GameObject;
+					GameObject.Destroy(impactClone, 1);
+					currentEnemies += 1;
+				}
 			}
 
 			int invokeTime = Random.Range(5, 10);
@@ -91,8 +95,10 @@ public class Boss : MonoBehaviour {
 		gameObject.GetComponent<Rigidbody>().isKinematic = false;
 		gameObject.GetComponent<Rigidbody>().useGravity = true;
 
-		if(Physics.Raycast(transform.position, Vector3.down, out pedestalPos)){
-			
+		RaycastHit pedestalPos;
+		Vector3 down = transform.TransformDirection(Vector3.back) * 10;
+		if(Physics.Raycast(transform.position, down, out pedestalPos)){
+
 		}
 		Level levelScript = Level.GetComponent<Level>();
 		levelScript.SetupPedestal(pedestalPos.point);
@@ -102,5 +108,8 @@ public class Boss : MonoBehaviour {
 		levelScript.SpawnPedestal();
 
 		Object.Destroy(gameObject);
+	}
+	void DestroyedEnemy(){
+		currentEnemies -= 1;
 	}
 }

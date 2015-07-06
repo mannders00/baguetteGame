@@ -8,6 +8,7 @@ public class EnemyBread : MonoBehaviour {
 	public int speed;
 	public GameObject explosion;
 	public int damage;
+	public GameObject boss;
 
 	private bool go = true;
 
@@ -40,6 +41,7 @@ public class EnemyBread : MonoBehaviour {
 	void Hit(){
 		Instantiate(explosion, transform.position, Quaternion.identity);
 		GameObject.Destroy(gameObject);
+		boss.SendMessage("DestroyedEnemy", SendMessageOptions.DontRequireReceiver);
 	}
 	void OnTriggerEnter(Collider other){
 		if(other.tag != "CanBeShot" && other.tag == "Player"){
