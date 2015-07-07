@@ -18,9 +18,9 @@ public class CharacterPlanet : MonoBehaviour {
 	private float cooldown = 0.5F;
 	public float projectileForce;
 //	public GameObject turboImage;
-	public Text header;
+//	public Text header;
 	public GameObject rocket;
-	public int sensitivity;
+	public float sensitivity = 0.33F;
 
 	private Vector3 velocity = Vector3.zero;
 	private bool turbo;
@@ -32,6 +32,9 @@ public class CharacterPlanet : MonoBehaviour {
 	public Text healthText;
 
 	private Quaternion rocketRotation = Quaternion.identity;
+
+	private bool goingForward = false;
+	private bool goingBackward = false;
 
 	void Start(){
 	//	cooldown = 0;
@@ -69,16 +72,16 @@ public class CharacterPlanet : MonoBehaviour {
 				rocket.SendMessage("Explode", SendMessageOptions.DontRequireReceiver);
 			}
 
-			if(Input.GetKey(KeyCode.W)){
+			if(Input.GetKey(KeyCode.W) || goingForward == true){
 				rb.AddRelativeForce(Vector3.left * flySpeed * Time.deltaTime * 10);
 				cam.transform.position = Vector3.SmoothDamp(cam.transform.position, position1, ref velocity, 0.3F);
 			}else{
 				cam.transform.position = Vector3.SmoothDamp(cam.transform.position, position2, ref velocity, 0.3F);
 			}
-			if(Input.GetKey(KeyCode.S)){
+			if(Input.GetKey(KeyCode.S) || goingBackward == true){
 				rb.AddRelativeForce(Vector3.right * flySpeed * Time.deltaTime * 10);
 			}
-			if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W)){
+			if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W) || goingForward == true || goingBackward == true){
 				thruster.SetActive(true);
 			}else{
 				thruster.SetActive(false);
@@ -89,8 +92,8 @@ public class CharacterPlanet : MonoBehaviour {
 			Quaternion clamp = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, z);
 			transform.rotation = clamp;*/
 			
-			float horizontal = Input.GetAxis("Mouse X");
-	//		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
+	//		float horizontal = Input.GetAxis("Mouse X");
+			float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
 			if(horizontal < 0){
 				if(z > 270 && z < 360 || z < 90){
 						transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
@@ -105,8 +108,8 @@ public class CharacterPlanet : MonoBehaviour {
 						transform.Rotate(Vector3.down * horizontal * Time.deltaTime * rotateSpeed, Space.World);
 					}
 			}
-			float vertical = Input.GetAxis("Mouse Y");
-	//		float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
+	//		float vertical = Input.GetAxis("Mouse Y");
+			float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
 
 			if(vertical > 0){
 				transform.Rotate(Vector3.back * vertical * Time.deltaTime * rotateSpeed);
@@ -144,6 +147,37 @@ public class CharacterPlanet : MonoBehaviour {
 			}
 		}
 
+	}
+	public void shoot(){
+		GameObject clone;
+		RaycastHit hit;
+
+		Vector3 raycastOrigin = cam.ViewportToWorldPoint(new Vector3(0.5F, 0.5F, 0));
+		Vector3 forward = transform.TransformDirection(Vector3.left) * 10;
+		Vector3 projectilePosition = transform.TransformPoint(-11.15F, -3.45F, -0.2F);
+
+		if(cooldown <= 0){
+			clone = Instantiate(projectile, projectilePosition, transform.rotation) as GameObject;
+			clone.transform.parent = projectileParent.transform;
+			cooldown = 0.5F;
+			if(Physics.Raycast(raycastOrigin, forward, out hit)){
+				if(hit.transform.tag == "CanBeShot"){
+					StartCoroutine(addScore(hit));
+				}
+			}
+		}
+	}
+	public void forwardTrue(){
+		goingForward = true;
+	}
+	public void forwardFalse(){
+		goingForward = false;
+	}
+	public void backwardTrue(){
+		goingBackward = true;
+	}
+	public void backwardFalse(){
+		goingBackward = false;
 	}
 	IEnumerator addScore(RaycastHit hit2){
 		yield return new WaitForSeconds(0.25F);
