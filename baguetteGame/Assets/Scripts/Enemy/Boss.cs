@@ -96,10 +96,11 @@ public class Boss : MonoBehaviour {
 		gameObject.GetComponent<Rigidbody>().useGravity = true;
 
 		RaycastHit pedestalPos;
-		Vector3 down = transform.TransformDirection(Vector3.back) * 10;
-		if(Physics.Raycast(transform.position, down, out pedestalPos)){
-
+	//	Vector3 down = transform.TransformDirection(Vector3.back) * 1000;
+		if(Physics.Raycast(transform.position, Vector3.down, out pedestalPos)){
+			
 		}
+
 		Level levelScript = Level.GetComponent<Level>();
 		levelScript.SetupPedestal(pedestalPos.point);
 	}

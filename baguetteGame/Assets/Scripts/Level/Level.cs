@@ -8,6 +8,7 @@ public class Level : MonoBehaviour {
 	public GameObject butter;
 	public GameObject dust;
 	public GameObject player;
+	public Transform precipitation;
 
 	public float pedestalSpeed = 1;
 	Vector3 spawnUnderPos;
@@ -33,6 +34,9 @@ public class Level : MonoBehaviour {
 
 	}
 	void Update(){
+		if(precipitation){
+			precipitation.position = new Vector3(player.transform.position.x, player.transform.position.y + 20, player.transform.position.z);
+		}
 		if(Input.GetKeyDown(KeyCode.Alpha0)){
 			Application.LoadLevel(0);
 		}

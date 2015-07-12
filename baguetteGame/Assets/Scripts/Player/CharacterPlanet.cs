@@ -23,7 +23,7 @@ public class CharacterPlanet : MonoBehaviour {
 	public float sensitivity = 0.33F;
 
 	private Vector3 velocity = Vector3.zero;
-	private bool turbo;
+//	private bool turbo;
 	private bool locked;
 	private int planetInt;
 	private bool cursorLockState = true;
@@ -37,8 +37,8 @@ public class CharacterPlanet : MonoBehaviour {
 	private bool goingBackward = false;
 
 	void Start(){
-	//	cooldown = 0;
-		turbo = false;
+		cooldown = 0;
+	//	turbo = false;
 	//	turboImage.GetComponent<Image>().color = Color.green;
 		locked = false;
 		Cursor.lockState = CursorLockMode.Locked;
@@ -47,22 +47,14 @@ public class CharacterPlanet : MonoBehaviour {
 		healthText.text = "H " + health.ToString();
 	}
 	void Update(){
-
-		float x1;
-		if(turbo == true){
-			x1 = 50;
-		}else{
-			x1 = 10;
-		}
 		
 		//rocket.transform.localEulerAngles = Vector3.Lerp(rocket.transform.localEulerAngles, new Vector3(45, 0, 0), Time.deltaTime * 5);
 
-		Vector3 position1 = transform.TransformPoint(x1, 0, 0);
-		Vector3 position2 = transform.TransformPoint(3, 0, 0);
-		Vector3 projectilePosition = transform.TransformPoint(-11.15F, -3.45F, -0.2F);
 
-		Vector3 raycastOrigin = cam.ViewportToWorldPoint(new Vector3(0.5F, 0.5F, 0));
-		Vector3 forward = transform.TransformDirection(Vector3.left) * 10;
+		//Forward Position
+		Vector3 position1 = transform.TransformPoint(18, 0, 0);
+		//Rest Position
+		Vector3 position2 = transform.TransformPoint(12, 0, 0);
 
 		if(locked == false){
 			rocket.transform.localRotation = Quaternion.Lerp(rocket.transform.localRotation, rocketRotation, Time.deltaTime * 3);
@@ -130,20 +122,8 @@ public class CharacterPlanet : MonoBehaviour {
 			}
 
 			cooldown -= Time.deltaTime;
-			//Firing
-			GameObject clone;
-			RaycastHit hit;
 			if(Input.GetKeyDown(KeyCode.Space)){
-				if(cooldown <= 0){
-					clone = Instantiate(projectile, projectilePosition, transform.rotation) as GameObject;
-					clone.transform.parent = projectileParent.transform;
-					cooldown = 0.5F;
-					if(Physics.Raycast(raycastOrigin, forward, out hit)){
-						if(hit.transform.tag == "CanBeShot"){
-							StartCoroutine(addScore(hit));
-						}
-					}
-				}
+				shoot();
 			}
 		}
 
@@ -159,7 +139,7 @@ public class CharacterPlanet : MonoBehaviour {
 		if(cooldown <= 0){
 			clone = Instantiate(projectile, projectilePosition, transform.rotation) as GameObject;
 			clone.transform.parent = projectileParent.transform;
-			cooldown = 0.5F;
+			cooldown = 0.25F;
 			if(Physics.Raycast(raycastOrigin, forward, out hit)){
 				if(hit.transform.tag == "CanBeShot"){
 					StartCoroutine(addScore(hit));
