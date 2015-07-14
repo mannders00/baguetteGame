@@ -52,13 +52,15 @@ public class Character : MonoBehaviour {
 		if(turbo == true){
 			x1 = 50;
 		}else{
-			x1 = 10;
+			x1 = 18;
 		}
 		
 		//rocket.transform.localEulerAngles = Vector3.Lerp(rocket.transform.localEulerAngles, new Vector3(45, 0, 0), Time.deltaTime * 5);
 
+		//Forward Position
 		Vector3 position1 = transform.TransformPoint(x1, 0, 0);
-		Vector3 position2 = transform.TransformPoint(3, 0, 0);
+		//Rest Position
+		Vector3 position2 = transform.TransformPoint(12, 0, 0);
 
 		if(locked == false){
 			rocket.transform.localRotation = Quaternion.Lerp(rocket.transform.localRotation, rocketRotation, Time.deltaTime * 3);
@@ -83,8 +85,8 @@ public class Character : MonoBehaviour {
 			Quaternion clamp = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, z);
 			transform.rotation = clamp;*/
 			
-	//		float horizontal = Input.GetAxis("Mouse X");
-			float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
+			float horizontal = Input.GetAxis("Mouse X");
+	//		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
 			if(horizontal < 0){
 				if(z > 270 && z < 360 || z < 90){
 						transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
@@ -99,8 +101,8 @@ public class Character : MonoBehaviour {
 						transform.Rotate(Vector3.down * horizontal * Time.deltaTime * rotateSpeed, Space.World);
 					}
 			}
-	//		float vertical = Input.GetAxis("Mouse Y");
-			float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
+			float vertical = Input.GetAxis("Mouse Y");
+	//		float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
 
 			if(vertical > 0){
 				transform.Rotate(Vector3.back * vertical * Time.deltaTime * rotateSpeed);
