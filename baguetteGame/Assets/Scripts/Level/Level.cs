@@ -69,5 +69,8 @@ public class Level : MonoBehaviour {
 			case 4: PlayerPrefs.SetInt("Planet", 4); PlayerPrefs.SetInt("Planet4", 1); Application.LoadLevel(0); break;
 			case 5: PlayerPrefs.SetInt("Planet", 5); PlayerPrefs.SetInt("Planet5", 1); Application.LoadLevel(0); break;
 		}
+		int prog = PlayerPrefs.GetInt("Progress");
+		prog += 1;
+		PlayerPrefs.SetInt("Progress", prog);
 	}
 }
