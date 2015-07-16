@@ -30,6 +30,8 @@ public class CharacterPlanet : MonoBehaviour {
 	private int health = 100;
 	public GameObject explosion;
 	public Text healthText;
+	public Transform boss;
+	public RectTransform pointer;
 
 	private Quaternion rocketRotation = Quaternion.identity;
 
@@ -45,10 +47,21 @@ public class CharacterPlanet : MonoBehaviour {
 		UnityEngine.Cursor.visible = false;
 		InvokeRepeating("add1", 0, 1);
 		healthText.text = "H " + health.ToString();
+		pointer = pointer.GetComponent<RectTransform>();
 	}
 	void Update(){
 		
-		//rocket.transform.localEulerAngles = Vector3.Lerp(rocket.transform.localEulerAngles, new Vector3(45, 0, 0), Time.deltaTime * 5);
+		if(boss){
+			Vector3 forward = -transform.right;
+			forward.y = 0f;
+			Vector3 toBoss = new Vector3(-boss.transform.position.x, 0, -boss.transform.position.z);
+			Vector3 referenceRight = Vector3.Cross(Vector3.up, forward);
+			float angle = Vector3.Angle(forward, toBoss);
+			float sign = Mathf.Sign(Vector3.Dot(toBoss, referenceRight));
+			float finalAngle = sign * -angle + 180;
+			pointer.rotation = Quaternion.Euler(0, 0, finalAngle);
+		}
+		
 
 
 		//Forward Position
