@@ -62,6 +62,12 @@ public class Level : MonoBehaviour {
 		Mathf.Clamp(player.transform.position.y, -500, 500), Mathf.Clamp(player.transform.position.z, -boundary, boundary));
 	}
 	public void butterCollect(){
-		print("butterr");
+		switch(Application.loadedLevel){
+			case 1: PlayerPrefs.SetInt("Planet", 1); PlayerPrefs.SetInt("Planet1", 1); Application.LoadLevel(0); break;
+			case 2: PlayerPrefs.SetInt("Planet", 2); PlayerPrefs.SetInt("Planet2", 1); Application.LoadLevel(0); break;
+			case 3: PlayerPrefs.SetInt("Planet", 3); PlayerPrefs.SetInt("Planet3", 1); Application.LoadLevel(0); break;
+			case 4: PlayerPrefs.SetInt("Planet", 4); PlayerPrefs.SetInt("Planet4", 1); Application.LoadLevel(0); break;
+			case 5: PlayerPrefs.SetInt("Planet", 5); PlayerPrefs.SetInt("Planet5", 1); Application.LoadLevel(0); break;
+		}
 	}
 }

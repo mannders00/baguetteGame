@@ -49,7 +49,9 @@ public class Character : MonoBehaviour {
 		
 		//rocket.transform.localEulerAngles = Vector3.Lerp(rocket.transform.localEulerAngles, new Vector3(45, 0, 0), Time.deltaTime * 5);
 
+		//Forward Position
 		Vector3 position1 = transform.TransformPoint(x1, 0, 0);
+
 		Vector3 position2 = transform.TransformPoint(13, 0, 0);
 
 		if(locked == false){
