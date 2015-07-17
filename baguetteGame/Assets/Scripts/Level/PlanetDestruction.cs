@@ -20,7 +20,7 @@ public class PlanetDestruction : MonoBehaviour {
 		}
 		print("Player has finished "+PlayerPrefs.GetInt("Progress")+" levels");
 		if(PlayerPrefs.GetInt("Progress") == 5){
-			Application.LoadLevel(6);
+			Application.LoadLevel(7);
 		}
 
 		planetIntVar = PlayerPrefs.GetInt("Planet");

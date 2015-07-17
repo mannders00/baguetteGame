@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class EnemyBread : MonoBehaviour {
@@ -41,7 +41,9 @@ public class EnemyBread : MonoBehaviour {
 	void Hit(){
 		Instantiate(explosion, transform.position, Quaternion.identity);
 		GameObject.Destroy(gameObject);
-		boss.SendMessage("DestroyedEnemy", SendMessageOptions.DontRequireReceiver);
+		if(boss){
+			boss.SendMessage("DestroyedEnemy", SendMessageOptions.DontRequireReceiver);
+		}
 	}
 	void OnTriggerEnter(Collider other){
 		if(other.tag != "CanBeShot" && other.tag == "Player"){
