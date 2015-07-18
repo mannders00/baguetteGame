@@ -18,7 +18,7 @@ public class PlanetDestruction : MonoBehaviour {
 			PlayerPrefs.SetInt("Planet1", 0); PlayerPrefs.SetInt("Planet2", 0); PlayerPrefs.SetInt("Planet3", 0); PlayerPrefs.SetInt("Planet4", 0); PlayerPrefs.SetInt("Planet5", 0); 
 			PlayerPrefs.SetInt("Progress", 0);
 		}
-		print("Player has finished "+PlayerPrefs.GetInt("Progress")+" levels");
+//		print("Player has finished "+PlayerPrefs.GetInt("Progress")+" levels");
 		if(PlayerPrefs.GetInt("Progress") == 5){
 			Application.LoadLevel(7);
 		}
