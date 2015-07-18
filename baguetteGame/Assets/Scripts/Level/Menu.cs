@@ -23,15 +23,19 @@ public class Menu : MonoBehaviour {
 		menu2.SetActive(true);
 		startButton.SetActive(false);
 		menu3.SetActive(false);
+		settingsMenu.SetActive(false);
 	}
 	public void menu1open(){
 		menu2.SetActive(false);
 		startButton.SetActive(true);
 		menu3.SetActive(false);
+		settingsMenu.SetActive(false);
 	}
 	public void menu3open(){
 		menu3.SetActive(true);
 		menu2.SetActive(false);
+		settingsMenu.SetActive(false);
+
 	}
 	public void Settings(){
 		settingsStatus = !settingsStatus;
@@ -56,6 +60,7 @@ public class Menu : MonoBehaviour {
 		progressText.text = "You have destroyed "+PlayerPrefs.GetInt("Progress").ToString()+" planets";
 	}
 	public void loadlLevel(){
+		uiAnimator.SetTrigger("Reset");
 		Application.LoadLevel(1);
 	}
 }
