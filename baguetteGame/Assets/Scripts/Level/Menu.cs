@@ -16,8 +16,12 @@ public class Menu : MonoBehaviour {
 
 	private bool settingsStatus;
 
+	public Slider sensitivitySlider;
+
 	public void Start(){
+		Time.timeScale = 1;
 		progressText.text = "You have destroyed "+PlayerPrefs.GetInt("Progress").ToString()+" planets";
+		sensitivitySlider.normalizedValue = PlayerPrefs.GetFloat("Sensitivity");
 	}
 	public void menu2open(){
 		menu2.SetActive(true);

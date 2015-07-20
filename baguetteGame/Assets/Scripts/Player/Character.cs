@@ -38,6 +38,9 @@ public class Character : MonoBehaviour {
 		Cursor.lockState = CursorLockMode.Locked;
 		UnityEngine.Cursor.visible = false;
 	}
+	public void ChangeSensitivity(float sens){
+		sensitivity = sens;
+	}
 	void Update(){
 
 		float x1;
@@ -82,8 +85,8 @@ public class Character : MonoBehaviour {
 			Quaternion clamp = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, z);
 			transform.rotation = clamp;*/
 			
-			float horizontal = Input.GetAxis("Mouse X");
-	//		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
+	//		float horizontal = Input.GetAxis("Mouse X");
+			float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
 			if(horizontal < 0){
 				if(z > 270 && z < 360 || z < 90){
 						transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
@@ -98,8 +101,8 @@ public class Character : MonoBehaviour {
 						transform.Rotate(Vector3.down * horizontal * Time.deltaTime * rotateSpeed, Space.World);
 					}
 			}
-			float vertical = Input.GetAxis("Mouse Y");
-	//		float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
+	//		float vertical = Input.GetAxis("Mouse Y");
+			float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
 
 			if(vertical > 0){
 				transform.Rotate(Vector3.back * vertical * Time.deltaTime * rotateSpeed);

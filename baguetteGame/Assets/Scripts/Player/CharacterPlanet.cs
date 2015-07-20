@@ -32,6 +32,7 @@ public class CharacterPlanet : MonoBehaviour {
 	public Text healthText;
 	public Transform boss;
 	public RectTransform pointer;
+	public GameObject respawnMenu;
 
 	private Quaternion rocketRotation = Quaternion.identity;
 
@@ -48,6 +49,10 @@ public class CharacterPlanet : MonoBehaviour {
 		InvokeRepeating("add1", 0, 1);
 		healthText.text = "H " + health.ToString();
 		pointer = pointer.GetComponent<RectTransform>();
+		sensitivity = PlayerPrefs.GetFloat("Sensitivity");
+	}
+	public void ChangeSensitivity(float sens){
+		sensitivity = sens;
 	}
 	void Update(){
 		
@@ -97,8 +102,8 @@ public class CharacterPlanet : MonoBehaviour {
 			Quaternion clamp = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, z);
 			transform.rotation = clamp;*/
 			
-			float horizontal = Input.GetAxis("Mouse X");
-	//		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
+	//		float horizontal = Input.GetAxis("Mouse X");
+			float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
 			if(horizontal < 0){
 				if(z > 270 && z < 360 || z < 90){
 						transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
@@ -113,8 +118,8 @@ public class CharacterPlanet : MonoBehaviour {
 						transform.Rotate(Vector3.down * horizontal * Time.deltaTime * rotateSpeed, Space.World);
 					}
 			}
-			float vertical = Input.GetAxis("Mouse Y");
-	//		float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
+	//		float vertical = Input.GetAxis("Mouse Y");
+			float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
 
 			if(vertical > 0){
 				transform.Rotate(Vector3.back * vertical * Time.deltaTime * rotateSpeed);
@@ -180,6 +185,10 @@ public class CharacterPlanet : MonoBehaviour {
 		locked = true;
 		rb.velocity =  Vector3.zero;
 		healthText.text = "H 0";
+		respawnMenu.SetActive(true);
+	}
+	public void Respawn(){
+		Application.LoadLevel(Application.loadedLevel);
 	}
 	public void changeHealth(int healthInt){
 		if(health > 0){
