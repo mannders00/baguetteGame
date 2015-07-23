@@ -17,12 +17,16 @@ public class Boss : MonoBehaviour {
 	public GameObject Level;
 	public float hitDamage = 100;
 	private int currentEnemies;
+	public int totalEnemies;
 
 	public float totalHits = 50;
 	private float damage;
 	private float totalStep;
 	private float health = 100;
 	private float guiStepState;
+
+	public AudioSource audioSource;
+	public AudioClip explosionNoise;
 
 	void Start(){
 		bossHealth = bossHealth.GetComponent<RectTransform>();
@@ -75,7 +79,7 @@ public class Boss : MonoBehaviour {
 						x = -x;
 						z = -z;
 					}
-					if(currentEnemies < 10){
+					if(currentEnemies < totalEnemies){
 						Vector3 spawnPosition = new Vector3(transform.localPosition.x + x, transform.localPosition.y + spawnY, transform.localPosition.z + z);
 
 						GameObject enemyBreadClone = Instantiate(enemyBread, spawnPosition, Quaternion.identity) as GameObject;
@@ -110,6 +114,7 @@ public class Boss : MonoBehaviour {
 	void finish(){
 		Level levelScript = Level.GetComponent<Level>();
 		levelScript.SpawnPedestal();
+		audioSource.PlayOneShot(explosionNoise);
 
 		Object.Destroy(gameObject);
 	}

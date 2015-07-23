@@ -13,6 +13,9 @@ public class PlanetDestruction : MonoBehaviour {
 	public int planetIntVar;
 	public bool resetPlayerPrefs;
 
+	public AudioSource audioSource;
+	public AudioClip explosionNoise;
+
 	public void Start(){
 		if(resetPlayerPrefs == true){
 			PlayerPrefs.SetInt("Planet1", 0); PlayerPrefs.SetInt("Planet2", 0); PlayerPrefs.SetInt("Planet3", 0); PlayerPrefs.SetInt("Planet4", 0); PlayerPrefs.SetInt("Planet5", 0); 
@@ -48,6 +51,7 @@ public class PlanetDestruction : MonoBehaviour {
 		PlayerPrefs.SetInt("Planet", 0);
 	}
 	public void Destruction(){
+		audioSource.PlayOneShot(explosionNoise);
 		GameObject explosionInstantiate = Instantiate(explosion, explosionPosition, Quaternion.identity) as GameObject;
 		GameObject.Destroy(explosionInstantiate, 10);
 		GameObject.Destroy(planet, 0.5F);

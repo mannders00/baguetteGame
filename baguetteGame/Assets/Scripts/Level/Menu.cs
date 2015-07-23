@@ -18,27 +18,33 @@ public class Menu : MonoBehaviour {
 
 	public Slider sensitivitySlider;
 
+	public AudioSource audioSource;
+	public AudioClip select;
+
 	public void Start(){
 		Time.timeScale = 1;
 		progressText.text = "You have destroyed "+PlayerPrefs.GetInt("Progress").ToString()+" planets";
-		sensitivitySlider.normalizedValue = PlayerPrefs.GetFloat("Sensitivity");
+		sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
 	}
 	public void menu2open(){
 		menu2.SetActive(true);
 		startButton.SetActive(false);
 		menu3.SetActive(false);
 		settingsMenu.SetActive(false);
+		audioSource.PlayOneShot(select);
 	}
 	public void menu1open(){
 		menu2.SetActive(false);
 		startButton.SetActive(true);
 		menu3.SetActive(false);
 		settingsMenu.SetActive(false);
+		audioSource.PlayOneShot(select);
 	}
 	public void menu3open(){
 		menu3.SetActive(true);
 		menu2.SetActive(false);
 		settingsMenu.SetActive(false);
+		audioSource.PlayOneShot(select);
 
 	}
 	public void Settings(){
@@ -46,15 +52,18 @@ public class Menu : MonoBehaviour {
 		if(settingsStatus){
 			Time.timeScale = 0;
 			settingsMenu.SetActive(true);
+			audioSource.PlayOneShot(select);
 		}else{
 			Time.timeScale = 1;
 			settingsMenu.SetActive(false);
+			audioSource.PlayOneShot(select);
 		}
 	}
 	public void startAnim(){
 		uiAnimator.SetTrigger("Start");
 		menu3.SetActive(false);
 		menu2.SetActive(false);
+		audioSource.PlayOneShot(select);
 	}
 	public void setSensitivity(float sens){
 		PlayerPrefs.SetFloat("Sensitivity", sens);

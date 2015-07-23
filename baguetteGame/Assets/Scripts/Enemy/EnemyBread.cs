@@ -12,6 +12,9 @@ public class EnemyBread : MonoBehaviour {
 
 	private bool go = true;
 
+	public AudioSource audioSource;
+	public AudioClip smallExplosion;
+
 	void Update () {
 		if(playerObject){
 			transform.LookAt(player.transform, Vector3.up);
@@ -39,6 +42,7 @@ public class EnemyBread : MonoBehaviour {
 		}
 	}
 	void Hit(){
+		audioSource.PlayOneShot(smallExplosion);
 		Instantiate(explosion, transform.position, Quaternion.identity);
 		GameObject.Destroy(gameObject);
 		if(boss){

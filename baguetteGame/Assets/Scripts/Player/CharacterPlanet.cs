@@ -39,6 +39,11 @@ public class CharacterPlanet : MonoBehaviour {
 	private bool goingForward = false;
 	private bool goingBackward = false;
 
+	public AudioSource audioSource;
+	public AudioClip laser;
+
+	bool isPlaying;
+
 	void Start(){
 		cooldown = 0;
 	//	turbo = false;
@@ -49,7 +54,6 @@ public class CharacterPlanet : MonoBehaviour {
 		InvokeRepeating("add1", 0, 1);
 		healthText.text = "H " + health.ToString();
 		pointer = pointer.GetComponent<RectTransform>();
-		sensitivity = PlayerPrefs.GetFloat("Sensitivity");
 	}
 	public void ChangeSensitivity(float sens){
 		sensitivity = sens;
@@ -64,7 +68,9 @@ public class CharacterPlanet : MonoBehaviour {
 			float angle = Vector3.Angle(forward, toBoss);
 			float sign = Mathf.Sign(Vector3.Dot(toBoss, referenceRight));
 			float finalAngle = sign * -angle + 180;
-			pointer.rotation = Quaternion.Euler(0, 0, finalAngle);
+			if(pointer){
+				pointer.rotation = Quaternion.Euler(0, 0, finalAngle);
+			}
 		}
 		
 
@@ -93,8 +99,14 @@ public class CharacterPlanet : MonoBehaviour {
 			}
 			if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W) || goingForward == true || goingBackward == true){
 				thruster.SetActive(true);
+				if(isPlaying == false){
+					rocket.GetComponent<AudioSource>().Play();
+					isPlaying = true;
+				}
 			}else{
 				thruster.SetActive(false);
+				rocket.GetComponent<AudioSource>().Pause();
+				isPlaying = false;
 			}
 
 			float z = transform.localEulerAngles.z;
@@ -102,8 +114,8 @@ public class CharacterPlanet : MonoBehaviour {
 			Quaternion clamp = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, z);
 			transform.rotation = clamp;*/
 			
-	//		float horizontal = Input.GetAxis("Mouse X");
-			float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
+			float horizontal = Input.GetAxis("Mouse X") * sensitivity;
+	//		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
 			if(horizontal < 0){
 				if(z > 270 && z < 360 || z < 90){
 						transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
@@ -118,8 +130,8 @@ public class CharacterPlanet : MonoBehaviour {
 						transform.Rotate(Vector3.down * horizontal * Time.deltaTime * rotateSpeed, Space.World);
 					}
 			}
-	//		float vertical = Input.GetAxis("Mouse Y");
-			float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
+			float vertical = Input.GetAxis("Mouse Y") * sensitivity;
+	//		float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
 
 			if(vertical > 0){
 				transform.Rotate(Vector3.back * vertical * Time.deltaTime * rotateSpeed);
@@ -149,6 +161,8 @@ public class CharacterPlanet : MonoBehaviour {
 	public void shoot(){
 		GameObject clone;
 		RaycastHit hit;
+
+		audioSource.PlayOneShot(laser);
 
 		Vector3 raycastOrigin = cam.ViewportToWorldPoint(new Vector3(0.5F, 0.5F, 0));
 		Vector3 forward = transform.TransformDirection(Vector3.left) * 10;

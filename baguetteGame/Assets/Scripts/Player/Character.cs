@@ -31,12 +31,24 @@ public class Character : MonoBehaviour {
 	public GameObject level;
 	private bool thrusterBool;
 
+	public Slider slider;
+
+	private Vector2 touchStart;
+	private Vector2 direction;
+
+	public AudioSource audioSource;
+
+	public AudioClip thrusterClip;
+
+	bool isPlaying;
+
 	void Start(){
 		turbo = false;
 		turboImage.GetComponent<Image>().color = Color.green;
 		locked = false;
 		Cursor.lockState = CursorLockMode.Locked;
 		UnityEngine.Cursor.visible = false;
+		sensitivity = PlayerPrefs.GetFloat("Sensitivity");
 	}
 	public void ChangeSensitivity(float sens){
 		sensitivity = sens;
@@ -69,10 +81,17 @@ public class Character : MonoBehaviour {
 			if(Input.GetKey(KeyCode.S) || goingBackward == true){
 				rb.AddRelativeForce(Vector3.right * flySpeed * Time.deltaTime * 10);
 			}
+
 			if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W) || goingForward == true || goingBackward == true){
 				thrusterBool = true;
+				if(isPlaying == false){
+					audioSource.Play();
+					isPlaying = true;
+				}
 			}else{
+				isPlaying = false;
 				thrusterBool = false;
+				audioSource.Pause();
 			}
 			if(thrusterBool == true){
 				thruster.SetActive(true);
@@ -80,13 +99,28 @@ public class Character : MonoBehaviour {
 				thruster.SetActive(false);
 			}
 
+
+			for(int i=0; i < Input.touchCount; i++){
+				Touch touch = Input.GetTouch(i);
+				if(touch.position.x > Screen.width / 2 && touch.phase == TouchPhase.Moved){
+					direction = touch.position - touchStart;
+					direction = new Vector2(Mathf.Clamp(direction.x, -100, 100), Mathf.Clamp(direction.y, -100, 100));
+
+				}else{
+					direction = new Vector2(0, 0);
+				}
+				touchStart = touch.position;
+			}
+
 			float z = transform.localEulerAngles.z;
 			/*z = Mathf.Clamp((z <= 180) ? z : -(360 - z), -90, 90);
 			Quaternion clamp = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, z);
 			transform.rotation = clamp;*/
 			
-	//		float horizontal = Input.GetAxis("Mouse X");
-			float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
+			float horizontal = Input.GetAxis("Mouse X") * sensitivity;
+	//		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;	
+	//		float horizontal = direction.x * sensitivity;
+
 			if(horizontal < 0){
 				if(z > 270 && z < 360 || z < 90){
 						transform.Rotate(Vector3.down * -horizontal * Time.deltaTime * rotateSpeed, Space.World);
@@ -101,8 +135,9 @@ public class Character : MonoBehaviour {
 						transform.Rotate(Vector3.down * horizontal * Time.deltaTime * rotateSpeed, Space.World);
 					}
 			}
-	//		float vertical = Input.GetAxis("Mouse Y");
-			float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
+			float vertical = Input.GetAxis("Mouse Y") * sensitivity;
+	//		float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
+	//		float vertical = direction.y * sensitivity;
 
 			if(vertical > 0){
 				transform.Rotate(Vector3.back * vertical * Time.deltaTime * rotateSpeed);
