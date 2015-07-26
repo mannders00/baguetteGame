@@ -9,6 +9,7 @@ public class GameUI : MonoBehaviour {
 	private bool settingsStatus;
 
 	public Slider sensitivitySlider;
+	public Slider volumeSlider;
 
 	public GameObject player;
 
@@ -17,6 +18,7 @@ public class GameUI : MonoBehaviour {
 	
 	public void Start(){
 		sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
+		volumeSlider.value = PlayerPrefs.GetFloat("Volume");
 	}
 	public void Settings(){
 		settingsStatus = !settingsStatus;
@@ -33,6 +35,10 @@ public class GameUI : MonoBehaviour {
 	public void setSensitivity(float sens){
 		PlayerPrefs.SetFloat("Sensitivity", sens);
 		player.SendMessage("ChangeSensitivity", sens);
+	}
+	public void setVolume(float vol){
+		PlayerPrefs.SetFloat("Volume", vol);
+		AudioListener.volume = vol;
 	}
 	public void menu(){
 		Application.LoadLevel(0);

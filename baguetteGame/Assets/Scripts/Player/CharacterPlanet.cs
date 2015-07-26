@@ -41,6 +41,7 @@ public class CharacterPlanet : MonoBehaviour {
 
 	public AudioSource audioSource;
 	public AudioClip laser;
+	public AudioClip rocketExplosion;
 
 	bool isPlaying;
 
@@ -109,12 +110,16 @@ public class CharacterPlanet : MonoBehaviour {
 				isPlaying = false;
 			}
 
+
 			float z = transform.localEulerAngles.z;
 			/*z = Mathf.Clamp((z <= 180) ? z : -(360 - z), -90, 90);
 			Quaternion clamp = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, z);
 			transform.rotation = clamp;*/
+
+			float horizontal = Lean.LeanTouch.DragDelta.x * sensitivity / 5;
+			float vertical = Lean.LeanTouch.DragDelta.y * sensitivity / 5;
 			
-			float horizontal = Input.GetAxis("Mouse X") * sensitivity;
+	//		float horizontal = Input.GetAxis("Mouse X") * sensitivity;
 	//		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
 			if(horizontal < 0){
 				if(z > 270 && z < 360 || z < 90){
@@ -130,7 +135,8 @@ public class CharacterPlanet : MonoBehaviour {
 						transform.Rotate(Vector3.down * horizontal * Time.deltaTime * rotateSpeed, Space.World);
 					}
 			}
-			float vertical = Input.GetAxis("Mouse Y") * sensitivity;
+
+	//		float vertical = Input.GetAxis("Mouse Y") * sensitivity;
 	//		float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
 
 			if(vertical > 0){
@@ -162,13 +168,12 @@ public class CharacterPlanet : MonoBehaviour {
 		GameObject clone;
 		RaycastHit hit;
 
-		audioSource.PlayOneShot(laser);
-
 		Vector3 raycastOrigin = cam.ViewportToWorldPoint(new Vector3(0.5F, 0.5F, 0));
 		Vector3 forward = transform.TransformDirection(Vector3.left) * 10;
 		Vector3 projectilePosition = transform.TransformPoint(-11.15F, -3.45F, -0.2F);
 
 		if(cooldown <= 0){
+			audioSource.PlayOneShot(laser);
 			clone = Instantiate(projectile, projectilePosition, transform.rotation) as GameObject;
 			clone.transform.parent = projectileParent.transform;
 			cooldown = 0.25F;
@@ -196,6 +201,7 @@ public class CharacterPlanet : MonoBehaviour {
 		hit2.transform.SendMessage("Hit", SendMessageOptions.DontRequireReceiver);
 	}
 	public void Explode(){
+		audioSource.PlayOneShot(rocketExplosion);
 		locked = true;
 		rb.velocity =  Vector3.zero;
 		healthText.text = "H 0";

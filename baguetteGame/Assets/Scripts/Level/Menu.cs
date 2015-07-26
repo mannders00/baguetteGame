@@ -17,6 +17,7 @@ public class Menu : MonoBehaviour {
 	private bool settingsStatus;
 
 	public Slider sensitivitySlider;
+	public Slider volumeSlider;
 
 	public AudioSource audioSource;
 	public AudioClip select;
@@ -25,6 +26,9 @@ public class Menu : MonoBehaviour {
 		Time.timeScale = 1;
 		progressText.text = "You have destroyed "+PlayerPrefs.GetInt("Progress").ToString()+" planets";
 		sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
+		volumeSlider.value = PlayerPrefs.GetFloat("Volume");
+		AudioListener.volume = PlayerPrefs.GetFloat("Volume");
+
 	}
 	public void menu2open(){
 		menu2.SetActive(true);
@@ -67,6 +71,10 @@ public class Menu : MonoBehaviour {
 	}
 	public void setSensitivity(float sens){
 		PlayerPrefs.SetFloat("Sensitivity", sens);
+	}
+	public void setVolume(float vol){
+		PlayerPrefs.SetFloat("Volume", vol);
+		AudioListener.volume = vol;
 	}
 	public void reset(){
 		PlayerPrefs.DeleteAll();

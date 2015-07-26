@@ -14,7 +14,7 @@ public class Character : MonoBehaviour {
 	public GameObject thruster;
 	public Animator animator;
 	public GameObject turboImage;
-	public Text header;
+	public GameObject header;
 	public GameObject rocket;
 	public float sensitivity = 0.33F;
 
@@ -33,11 +33,11 @@ public class Character : MonoBehaviour {
 
 	public Slider slider;
 
-	private Vector2 touchStart;
 	private Vector2 direction;
+	private int turnID;
+	private Vector2 lastPos;
 
 	public AudioSource audioSource;
-
 	public AudioClip thrusterClip;
 
 	bool isPlaying;
@@ -99,27 +99,18 @@ public class Character : MonoBehaviour {
 				thruster.SetActive(false);
 			}
 
-
-			for(int i=0; i < Input.touchCount; i++){
-				Touch touch = Input.GetTouch(i);
-				if(touch.position.x > Screen.width / 2 && touch.phase == TouchPhase.Moved){
-					direction = touch.position - touchStart;
-					direction = new Vector2(Mathf.Clamp(direction.x, -100, 100), Mathf.Clamp(direction.y, -100, 100));
-
-				}else{
-					direction = new Vector2(0, 0);
-				}
-				touchStart = touch.position;
-			}
-
 			float z = transform.localEulerAngles.z;
 			/*z = Mathf.Clamp((z <= 180) ? z : -(360 - z), -90, 90);
 			Quaternion clamp = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, z);
 			transform.rotation = clamp;*/
 			
-			float horizontal = Input.GetAxis("Mouse X") * sensitivity;
-	//		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;	
-	//		float horizontal = direction.x * sensitivity;
+			float horizontal = Lean.LeanTouch.DragDelta.x * sensitivity / 5;
+			float vertical = Lean.LeanTouch.DragDelta.y * sensitivity / 5;
+			
+	//		float horizontal = Input.GetAxis("Mouse X") * sensitivity;
+	//		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
+
+ 
 
 			if(horizontal < 0){
 				if(z > 270 && z < 360 || z < 90){
@@ -135,16 +126,20 @@ public class Character : MonoBehaviour {
 						transform.Rotate(Vector3.down * horizontal * Time.deltaTime * rotateSpeed, Space.World);
 					}
 			}
-			float vertical = Input.GetAxis("Mouse Y") * sensitivity;
+
+	//		float vertical = Input.GetAxis("Mouse Y") * sensitivity;
 	//		float vertical = CrossPlatformInputManager.GetAxis("Vertical") * sensitivity;
-	//		float vertical = direction.y * sensitivity;
+	//		float vertical = Lean.LeanTouch.DragDelta.y;
 
 			if(vertical > 0){
 				transform.Rotate(Vector3.back * vertical * Time.deltaTime * rotateSpeed);
 			}else{
 				transform.Rotate(Vector3.forward * -vertical * Time.deltaTime * rotateSpeed);
 			}
+
 			rocketRotation.eulerAngles = new Vector3(horizontal * 15, 0, vertical * -5);
+			horizontal = 0;
+			vertical = 0;
 
 			if(Input.GetKeyDown(KeyCode.Escape)){
 				cursorLockState = !cursorLockState;
@@ -211,7 +206,10 @@ public class Character : MonoBehaviour {
 		locked = true;
 		gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
 		animator.SetTrigger("Cinematic_Drive");
-		header.text = "you are now entering planet "+planetText;
+
+		Text headerText = header.GetComponent<Text>();
+		header.SetActive(true);
+		headerText.text = "you are now entering planet "+planetText;
 	}
 	void switchPlanet(){
 		Application.LoadLevel(planet);

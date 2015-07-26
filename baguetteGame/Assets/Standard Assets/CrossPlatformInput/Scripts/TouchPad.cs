@@ -86,16 +86,6 @@ namespace UnityStandardAssets.CrossPlatformInput
 		void UpdateVirtualAxes(Vector3 value)
 		{
 			value = value.normalized;
-
-			float valuex = 1;
-			float valuey = 1;
-
-			value.x *= valuex;
-			if(value.x != 0){
-				print(value.x);
-			}
-			value.y *= valuey;
-
 			if (m_UseX)
 			{
 				m_HorizontalVirtualAxis.Update(value.x);
