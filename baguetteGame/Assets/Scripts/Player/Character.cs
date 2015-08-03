@@ -104,8 +104,8 @@ public class Character : MonoBehaviour {
 			Quaternion clamp = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, z);
 			transform.rotation = clamp;*/
 			
-			float horizontal = Lean.LeanTouch.DragDelta.x * sensitivity / 5;
-			float vertical = Lean.LeanTouch.DragDelta.y * sensitivity / 5;
+			float horizontal = Lean.LeanTouch.DragDelta.x * sensitivity / 7.5F;
+			float vertical = Lean.LeanTouch.DragDelta.y * sensitivity / 7.5F;
 			
 	//		float horizontal = Input.GetAxis("Mouse X") * sensitivity;
 	//		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;

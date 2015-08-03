@@ -628,11 +628,9 @@ namespace Lean
 				// Drag delta
 				for (var i = 0; i < fingerCount; i++)
 				{
-					//print(Fingers[i].IsOverGui);
 					if(!Fingers[i].IsOverGui){
 						DragDelta += Fingers[i].DeltaScreenPosition;
 					}
-
 
 				}
 				

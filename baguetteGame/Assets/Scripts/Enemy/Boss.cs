@@ -67,29 +67,25 @@ public class Boss : MonoBehaviour {
 		}
 	}
 	void SpawnEnemy(){
-		float distance = Vector3.Distance(transform.position, player.transform.position);
-		if(distance < 250){
-			if(!isDying){
-				int spawns = Random.Range(0, 3);
-				for(int i = 0; i <= spawns; i++){
-					int x = Random.Range(0, spawnXZ);
-					int z = Random.Range(0, spawnXZ);
-					int abs = Random.Range(0, 2);
-					if(abs == 1){
-						x = -x;
-						z = -z;
-					}
-					if(currentEnemies < totalEnemies){
-						Vector3 spawnPosition = new Vector3(transform.localPosition.x + x, transform.localPosition.y + spawnY, transform.localPosition.z + z);
-
-						GameObject enemyBreadClone = Instantiate(enemyBread, spawnPosition, Quaternion.identity) as GameObject;
-						enemyBreadClone.SetActive(true);
-						GameObject impactClone = Instantiate(impact, spawnPosition, Quaternion.identity) as GameObject;
-						GameObject.Destroy(impactClone, 1);
-						currentEnemies += 1;
-					}
+		if(!isDying){
+			int spawns = Random.Range(0, 3);
+			for(int i = 0; i <= spawns; i++){
+				int x = Random.Range(0, spawnXZ);
+				int z = Random.Range(0, spawnXZ);
+				int abs = Random.Range(0, 2);
+				if(abs == 1){
+					x = -x;
+					z = -z;
 				}
+				if(currentEnemies < totalEnemies){
+					Vector3 spawnPosition = new Vector3(transform.localPosition.x + x, transform.localPosition.y + spawnY, transform.localPosition.z + z);
 
+					GameObject enemyBreadClone = Instantiate(enemyBread, spawnPosition, Quaternion.identity) as GameObject;
+					enemyBreadClone.SetActive(true);
+					GameObject impactClone = Instantiate(impact, spawnPosition, Quaternion.identity) as GameObject;
+					GameObject.Destroy(impactClone, 1);
+					currentEnemies += 1;
+				}
 			}
 		}
 			int invokeTime = Random.Range(5, 10);

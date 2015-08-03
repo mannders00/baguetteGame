@@ -55,6 +55,7 @@ public class CharacterPlanet : MonoBehaviour {
 		InvokeRepeating("add1", 0, 1);
 		healthText.text = "H " + health.ToString();
 		pointer = pointer.GetComponent<RectTransform>();
+		sensitivity = PlayerPrefs.GetFloat("Sensitivity");
 	}
 	public void ChangeSensitivity(float sens){
 		sensitivity = sens;
@@ -116,8 +117,8 @@ public class CharacterPlanet : MonoBehaviour {
 			Quaternion clamp = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, z);
 			transform.rotation = clamp;*/
 
-			float horizontal = Lean.LeanTouch.DragDelta.x * sensitivity / 5;
-			float vertical = Lean.LeanTouch.DragDelta.y * sensitivity / 5;
+			float horizontal = Lean.LeanTouch.DragDelta.x * sensitivity / 7.5F;
+			float vertical = Lean.LeanTouch.DragDelta.y * sensitivity / 7.5F;
 			
 	//		float horizontal = Input.GetAxis("Mouse X") * sensitivity;
 	//		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * sensitivity;
